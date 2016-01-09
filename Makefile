@@ -23,7 +23,7 @@ endif
 DARWIN = $(strip $(findstring DARWIN, $(OSUPPER)))
 
 # Location of the CUDA Toolkit binaries and libraries
-CUDA_PATH       ?= /usr/local/cuda-5.0
+CUDA_PATH       ?= /media/michael/tank/CUDA
 CUDA_INC_PATH   ?= $(CUDA_PATH)/include
 CUDA_BIN_PATH   ?= $(CUDA_PATH)/bin
 ifneq ($(DARWIN),)
@@ -96,17 +96,8 @@ build: sha
 sha1.o: sha1.cu
 	$(NVCC) $(NVCCFLAGS) $(EXTRA_NVCCFLAGS) $(GENCODE_FLAGS) $(INCLUDES) -o $@ -dc $<
 
-sha1b.o: sha1b.cu
-	$(NVCC) $(NVCCFLAGS) $(EXTRA_NVCCFLAGS) $(GENCODE_FLAGS) $(INCLUDES) -o $@ -dc $<
-
 sha2.o: sha2.cu
 	$(NVCC) $(NVCCFLAGS) $(EXTRA_NVCCFLAGS) $(GENCODE_FLAGS) $(INCLUDES) -o $@ -dc $<
-
-sha2b.o: sha2b.cu
-	$(NVCC) $(NVCCFLAGS) $(EXTRA_NVCCFLAGS) $(GENCODE_FLAGS) $(INCLUDES) -o $@ -dc $<
-
-hmac.o: hmac.cu
-	$(NVCC) $(NVCCFLAGS) $(EXTRA_NVCCFLAGS) $(GENCODE_FLAGS) $(INCLUDES) -DUSE_SHA1 -o $@ -dc $<
 
 tests.o: tests.cu
 	$(NVCC) $(NVCCFLAGS) $(EXTRA_NVCCFLAGS) $(GENCODE_FLAGS) $(INCLUDES) -o $@ -dc $<
@@ -114,7 +105,7 @@ tests.o: tests.cu
 tests: sha1.o sha2.o tests.o
 	nvcc $(GENCODE_FLAGS) $(LDFLAGS) $(NVCCFLAGS) tests.o sha1.o sha2.o -o tests
 
-sha: sha1.o sha1b.o sha2.o sha2b.o hmac.o
+sha: sha1.o sha2.o
 
 clean:
 	rm -f *.o tests
