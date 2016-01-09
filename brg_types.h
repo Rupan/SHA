@@ -48,6 +48,12 @@ extern "C" {
 #else
 #  define ptrint_t int
 #endif
+#if defined( __CUDACC__ )
+#  define CUDA_TARGET __device__
+#else
+#  define CUDA_TARGET
+#endif
+
 
 #ifndef BRG_UI32
 #  define BRG_UI32
@@ -129,6 +135,9 @@ extern "C" {
 #  elif defined( __WATCOMC__ )
 #    define VOID_RETURN  void __cdecl
 #    define INT_RETURN   int  __cdecl
+#  elif defined( __CUDACC__ )
+#    define VOID_RETURN  void CUDA_TARGET
+#    define INT_RETURN   int CUDA_TARGET
 #  else
 #    define VOID_RETURN  void
 #    define INT_RETURN   int

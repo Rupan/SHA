@@ -35,7 +35,7 @@ Issue Date: 20/12/2007
 #elif defined( __linux__ ) || defined( __GNUC__ ) || defined( __GNU_LIBRARY__ )
 #  if !defined( __MINGW32__ ) && !defined( _AIX )
 #    include <endian.h>
-#    if !defined( __BEOS__ )
+#    if !defined( __BEOS__ ) && !defined( __CUDACC__ )
 #      include <byteswap.h>
 #    endif
 #  endif

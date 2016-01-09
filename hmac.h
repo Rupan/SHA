@@ -90,15 +90,15 @@ typedef struct
 
 /* returns the length of hash digest for the hash used  */
 /* mac_len must not be greater than this                */
-int hmac_sha_begin(enum hmac_hash hash, hmac_ctx cx[1]);
+INT_RETURN hmac_sha_begin(enum hmac_hash hash, hmac_ctx cx[1]);
 
-int  hmac_sha_key(const unsigned char key[], unsigned long key_len, hmac_ctx cx[1]);
+INT_RETURN hmac_sha_key(const unsigned char key[], unsigned long key_len, hmac_ctx cx[1]);
 
-void hmac_sha_data(const unsigned char data[], unsigned long data_len, hmac_ctx cx[1]);
+VOID_RETURN hmac_sha_data(const unsigned char data[], unsigned long data_len, hmac_ctx cx[1]);
 
-void hmac_sha_end(unsigned char mac[], unsigned long mac_len, hmac_ctx cx[1]);
+VOID_RETURN hmac_sha_end(unsigned char mac[], unsigned long mac_len, hmac_ctx cx[1]);
 
-void hmac_sha(enum hmac_hash hash, const unsigned char key[], unsigned long key_len,
+VOID_RETURN hmac_sha(enum hmac_hash hash, const unsigned char key[], unsigned long key_len,
           const unsigned char data[], unsigned long data_len,
           unsigned char mac[], unsigned long mac_len);
 

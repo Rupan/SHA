@@ -83,7 +83,7 @@ int hmac_sha_begin(enum hmac_hash hash, hmac_ctx cx[1])
 }
 
 /* input the HMAC key (can be called multiple times)    */
-int hmac_sha_key(const unsigned char key[], unsigned long key_len, hmac_ctx cx[1])
+INT_RETURN hmac_sha_key(const unsigned char key[], unsigned long key_len, hmac_ctx cx[1])
 {
     if(cx->klen == HMAC_IN_DATA)                /* error if further key input   */
         return EXIT_FAILURE;                    /* is attempted in data mode    */
@@ -107,7 +107,7 @@ int hmac_sha_key(const unsigned char key[], unsigned long key_len, hmac_ctx cx[1
 
 /* input the HMAC data (can be called multiple times) - */
 /* note that this call terminates the key input phase   */
-void hmac_sha_data(const unsigned char data[], unsigned long data_len, hmac_ctx cx[1])
+VOID_RETURN hmac_sha_data(const unsigned char data[], unsigned long data_len, hmac_ctx cx[1])
 {   unsigned int i;
 
     if(cx->klen != HMAC_IN_DATA)                /* if not yet in data phase */
@@ -139,7 +139,7 @@ void hmac_sha_data(const unsigned char data[], unsigned long data_len, hmac_ctx 
 }
 
 /* compute and output the MAC value */
-void hmac_sha_end(unsigned char mac[], unsigned long mac_len, hmac_ctx cx[1])
+VOID_RETURN hmac_sha_end(unsigned char mac[], unsigned long mac_len, hmac_ctx cx[1])
 {   unsigned char dig[HMAC_MAX_OUTPUT_SIZE];
     unsigned int i;
 
@@ -165,7 +165,7 @@ void hmac_sha_end(unsigned char mac[], unsigned long mac_len, hmac_ctx cx[1])
 }
 
 /* 'do it all in one go' subroutine     */
-void hmac_sha(enum hmac_hash hash, const unsigned char key[], unsigned long key_len,
+VOID_RETURN hmac_sha(enum hmac_hash hash, const unsigned char key[], unsigned long key_len,
           const unsigned char data[], unsigned long data_len,
           unsigned char mac[], unsigned long mac_len)
 {   hmac_ctx    cx[1];

@@ -154,7 +154,7 @@ extern "C"
 
 /* SHA256 mixing data   */
 
-const uint32_t k256[64] =
+CUDA_TARGET const uint32_t k256[64] =
 {   0x428a2f98ul, 0x71374491ul, 0xb5c0fbcful, 0xe9b5dba5ul,
     0x3956c25bul, 0x59f111f1ul, 0x923f82a4ul, 0xab1c5ed5ul,
     0xd807aa98ul, 0x12835b01ul, 0x243185beul, 0x550c7dc3ul,
@@ -345,7 +345,7 @@ VOID_RETURN sha256_hash(const unsigned char data[], unsigned long len, sha256_ct
 
 /* SHA256 Final padding and digest calculation  */
 
-static void sha_end1(unsigned char hval[], sha256_ctx ctx[1], const unsigned int hlen)
+static VOID_RETURN sha_end1(unsigned char hval[], sha256_ctx ctx[1], const unsigned int hlen)
 {   uint32_t    i = (uint32_t)((ctx->count[0] >> 3) & SHA256_MASK), m1;
 
     /* put bytes in the buffer in an order in which references to   */
@@ -394,7 +394,7 @@ static void sha_end1(unsigned char hval[], sha256_ctx ctx[1], const unsigned int
 
 #if defined(SHA_224)
 
-const uint32_t i224[8] =
+CUDA_TARGET const uint32_t i224[8] =
 {
     0xc1059ed8ul, 0x367cd507ul, 0x3070dd17ul, 0xf70e5939ul,
     0xffc00b31ul, 0x68581511ul, 0x64f98fa7ul, 0xbefa4fa4ul
@@ -423,7 +423,7 @@ VOID_RETURN sha224(unsigned char hval[], const unsigned char data[], unsigned lo
 
 #if defined(SHA_256)
 
-const uint32_t i256[8] =
+CUDA_TARGET const uint32_t i256[8] =
 {
     0x6a09e667ul, 0xbb67ae85ul, 0x3c6ef372ul, 0xa54ff53aul,
     0x510e527ful, 0x9b05688cul, 0x1f83d9abul, 0x5be0cd19ul
@@ -485,7 +485,7 @@ VOID_RETURN sha256(unsigned char hval[], const unsigned char data[], unsigned lo
 
 /* SHA384/SHA512 mixing data    */
 
-const uint64_t  k512[80] =
+CUDA_TARGET const uint64_t k512[80] =
 {
     li_64(428a2f98d728ae22), li_64(7137449123ef65cd),
     li_64(b5c0fbcfec4d3b2f), li_64(e9b5dba58189dbbc),
@@ -621,7 +621,7 @@ VOID_RETURN sha512_hash(const unsigned char data[], unsigned long len, sha512_ct
 
 /* SHA384/512 Final padding and digest calculation  */
 
-static void sha_end2(unsigned char hval[], sha512_ctx ctx[1], const unsigned int hlen)
+static VOID_RETURN sha_end2(unsigned char hval[], sha512_ctx ctx[1], const unsigned int hlen)
 {   uint32_t     i = (uint32_t)((ctx->count[0] >> 3) & SHA512_MASK);
     uint64_t     m1;
 
@@ -673,7 +673,7 @@ static void sha_end2(unsigned char hval[], sha512_ctx ctx[1], const unsigned int
 
 /* SHA384 initialisation data   */
 
-const uint64_t  i384[80] =
+CUDA_TARGET const uint64_t i384[8] =
 {
     li_64(cbbb9d5dc1059ed8), li_64(629a292a367cd507),
     li_64(9159015a3070dd17), li_64(152fecd8f70e5939),
@@ -706,7 +706,7 @@ VOID_RETURN sha384(unsigned char hval[], const unsigned char data[], unsigned lo
 
 /* SHA512 initialisation data   */
 
-static const uint64_t i512[SHA512_DIGEST_SIZE >> 3] =
+CUDA_TARGET static const uint64_t i512[SHA512_DIGEST_SIZE >> 3] =
 {
     li_64(6a09e667f3bcc908), li_64(bb67ae8584caa73b),
     li_64(3c6ef372fe94f82b), li_64(a54ff53a5f1d36f1),
@@ -716,7 +716,7 @@ static const uint64_t i512[SHA512_DIGEST_SIZE >> 3] =
 
 /* FIPS PUB 180-4: SHA-512/256 */
 
-static const uint64_t i512_256[SHA512_DIGEST_SIZE >> 3] =
+CUDA_TARGET static const uint64_t i512_256[SHA512_DIGEST_SIZE >> 3] =
 {
     li_64(22312194fc2bf72c), li_64(9f555fa3c84c64c2),
     li_64(2393b86b6f53b151), li_64(963877195940eabd),
@@ -726,7 +726,7 @@ static const uint64_t i512_256[SHA512_DIGEST_SIZE >> 3] =
 
 /* FIPS PUB 180-4: SHA-512/224 */
 
-static const uint64_t i512_224[SHA512_DIGEST_SIZE >> 3] =
+CUDA_TARGET static const uint64_t i512_224[SHA512_DIGEST_SIZE >> 3] =
 {
     li_64(8c3d37c819544da2), li_64(73e1996689dcd4d6),
     li_64(1dfab7ae32ff9c82), li_64(679dd514582f9fcf),
@@ -736,7 +736,7 @@ static const uint64_t i512_224[SHA512_DIGEST_SIZE >> 3] =
 
 /* FIPS PUB 180-4: SHA-512/192 (unsanctioned; facilitates using AES-192) */
 
-static const uint64_t i512_192[SHA512_DIGEST_SIZE >> 3] =
+CUDA_TARGET static const uint64_t i512_192[SHA512_DIGEST_SIZE >> 3] =
 {
     li_64(010176140648b233), li_64(db92aeb1eebadd6f),
     li_64(83a9e27aa1d5ea62), li_64(ec95f77eb609b4e1),
@@ -746,7 +746,7 @@ static const uint64_t i512_192[SHA512_DIGEST_SIZE >> 3] =
 
 /* FIPS PUB 180-4: SHA-512/128 (unsanctioned; facilitates using AES-128) */
 
-static const uint64_t i512_128[SHA512_DIGEST_SIZE >> 3] =
+CUDA_TARGET static const uint64_t i512_128[SHA512_DIGEST_SIZE >> 3] =
 {
     li_64(c953a21464c3e8cc), li_64(06cc9cfd166a34b5),
     li_64(647e88dabf8b24ab), li_64(8513e4dc05a078ac),
