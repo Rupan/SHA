@@ -48,11 +48,15 @@ int main( void ) {
   if(err != cudaSuccess) { }
 
   err = cudaGetDeviceCount(&device_count);
-  if(err != cudaSuccess) { }
+  if(err != cudaSuccess) {
+    printf("Could not get device count (err=%d).\n", err);
+    return -1;
+  }
   if(device_count == 0) {
     printf("Device not found.\n");
     return 1;
   }
+  printf("Device count = %d.\n", device_count);
   // hard-code device 0 for now
   err = cudaGetDeviceProperties(&prop, 0);
   if(err != cudaSuccess) {
